@@ -8,9 +8,9 @@ const scheduleChangeMenuOptions = ["Change existing flight date", "Add new fligh
 
 let airlines = ["Qantas", "Jetstar", "Virgin"];
 let flights = [
-    {id: "QA187", airline: "Qantas", origin: "Sydney", destination: "Perth", date: "15/05/2024"},
-    {id: "JE095", airline: "Jetstar", origin: "Gold Coast", destination: "Alice Springs", date: "07/06/2024"},
-    {id: "VI783", airline: "Virgin", origin: "Bangkok", destination: "London", date: "16/08/2024"},
+    { id: "QA187", airline: "Qantas", origin: "Sydney", destination: "Perth", date: "15/05/2024" },
+    { id: "JE095", airline: "Jetstar", origin: "Gold Coast", destination: "Alice Springs", date: "07/06/2024" },
+    { id: "VI783", airline: "Virgin", origin: "Bangkok", destination: "London", date: "16/08/2024" },
 ];
 
 let input = "";
@@ -18,14 +18,14 @@ let input = "";
 do {
     console.clear();
     logSeparated("MENU", lineLength);
-    input = readlineSync.keyInSelect(mainMenuOptions, "Please select an action to continue", {cancel: false});
+    input = readlineSync.keyInSelect(mainMenuOptions, "Please select an action to continue", { cancel: false });
 
     switch (input) {
         case 0:
             console.clear();
             logSeparated("Current Schedule", lineLength);
             printScheduleTable(flights);
-            readlineSync.keyInPause(wrapString("Press q to return to main menu..."), {limit: ["q"], guide: false});
+            readlineSync.keyInPause(wrapString("Press q to return to main menu..."), { limit: ["q"], guide: false });
             console.clear();
             break;
         case 1: {
@@ -38,7 +38,7 @@ do {
                 case 0: {
                     let flightId = "";
                     let flightIndex = -1;
-                    
+
                     do {
                         flightId = readlineSync.question(wrapString("Enter the id of the flight to change the date for: "));
                         for (let i = 0; i < flights.length; i++) {
@@ -49,16 +49,16 @@ do {
                         }
                         if (flightIndex < 0) {
                             logWrapped(`ERROR: Flight ID ${flightId} not found. Please enter the ID of a flight already tracked by this system.`);
-                        } 
+                        }
                     } while (flightIndex < 0);
 
                     logWrapped(`The current departure date for ${flights[flightIndex].id} is ${flights[flightIndex].date}`);
 
                     const date = enterFlightDate();
                     flights[flightIndex].date = date;
-                    
+
                     logWrapped(`Flight successfully updated!`);
-                    readlineSync.keyInPause(wrapString("Press q to return to main menu..."), {limit: ["q"], guide: false});
+                    readlineSync.keyInPause(wrapString("Press q to return to main menu..."), { limit: ["q"], guide: false });
                     break;
                 }
                 case 1: {
@@ -68,7 +68,7 @@ do {
                     let airlineIndex = 0;
                     let cachedLength = 0;
                     do {
-                        airlineIndex = readlineSync.keyInSelect([...airlines, "Add New Airline"], "Select an existing airline or add a new one ", {cancel: false});
+                        airlineIndex = readlineSync.keyInSelect([...airlines, "Add New Airline"], "Select an existing airline or add a new one ", { cancel: false });
                         cachedLength = airlines.length;
                         if (airlineIndex === airlines.length) {
                             let isValid = false;
@@ -85,12 +85,12 @@ do {
 
                     const date = enterFlightDate();
 
-                    const flight = {id: generateFlightId(airlines[airlineIndex]), airline: airlines[airlineIndex], origin, destination, date};
+                    const flight = { id: generateFlightId(airlines[airlineIndex]), airline: airlines[airlineIndex], origin, destination, date };
                     flights.push(flight);
 
                     logWrapped(`Successfully added flight ${flight.id} with the following details:`);
                     console.log(createFlightEntry(flight));
-                    readlineSync.keyInPause(wrapString("Press q to return to main menu..."), {limit: ["q"], guide: false});
+                    readlineSync.keyInPause(wrapString("Press q to return to main menu..."), { limit: ["q"], guide: false });
                     break;
                 }
                 case 2:
@@ -147,5 +147,5 @@ function addAirline(airline, airlines) {
     airlines.push(airline);
     logWrapped(`Airline ${airline} successfully added.`);
     return airlines;
-  
+
 }
