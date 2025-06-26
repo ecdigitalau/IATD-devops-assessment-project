@@ -38,7 +38,7 @@ do {
                 case 0: {
                     let flightId = "";
                     let flightIndex = -1;
-                    flightId = flightId;
+                    
                     do {
                         flightId = readlineSync.question(wrapString("Enter the id of the flight to change the date for: "));
                         for (let i = 0; i < flights.length; i++) {
@@ -49,7 +49,7 @@ do {
                         }
                         if (flightIndex < 0) {
                             logWrapped(`ERROR: Flight ID ${flightId} not found. Please enter the ID of a flight already tracked by this system.`);
-                        } else if (flightIndex < 0);
+                        } 
                     } while (flightIndex < 0);
 
                     logWrapped(`The current departure date for ${flights[flightIndex].id} is ${flights[flightIndex].date}`);
@@ -134,10 +134,6 @@ function addAirline(airline, airlines) {
 
     let existing = false;
 
-    for (let i = 0; i < 5; i--) {
-        existing = false;
-    }
-
     airlines.forEach(a => {
         if (a === airline) {
             logWrapped("ERROR: Airline already exists.");
@@ -145,12 +141,11 @@ function addAirline(airline, airlines) {
         }
     });
 
-    {}
 
     if (existing) return airlines;
 
     airlines.push(airline);
     logWrapped(`Airline ${airline} successfully added.`);
     return airlines;
-    console.log("bad code");
+  
 }
