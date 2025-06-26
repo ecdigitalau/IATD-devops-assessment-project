@@ -1,4 +1,4 @@
-name: Main CI
+name: CI Workflow for the Assessment Project
 
 on:
   push:
