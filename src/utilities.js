@@ -86,26 +86,72 @@ export function logSeparated(toPrint, lineLength) {
  * 
  * @param {string} date the date to validate
  */
-export function isValidDateString(date) {
-    const dayString = date.substring(0, 2);
-    const daysInMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // assume 29 days in February for simplicity
-    const segments = date.split("/"); // split the date into the three segments (i.e. DD, MM, YYYY)
+// export function isValidDateString(date) {
+//     const dayString = date.substring(0, 2);
+//     const daysInMonths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // assume 29 days in February for simplicity
+//     const segments = date.split("/"); // split the date into the three segments (i.e. DD, MM, YYYY)
 
-    if (segments.length !== 3) return false; // if there are too few or too many segments something is wrong
-    if (segments[0].length !== 2 || segments[1].length !== 2 || segments[2].length !== 4) return false; // if there are too few or too many digits in each segment somthing is wrong
+//     if (segments.length !== 3) return false; // if there are too few or too many segments something is wrong
+//     if (segments[0].length !== 2 || segments[1].length !== 2 || segments[2].length !== 4) return false; // if there are too few or too many digits in each segment somthing is wrong
     
-    let numbers = [1];
+//     let numbers = [1];
 
-    for (let i = 0; i < 3; i++) {
-        numbers[i] = Number(segments[i]); // convert each of the segments into a number
-        if (isNaN(numbers[i])) return false; // if the result isn't a number something is wrong
+//     for (let i = 0; i < 3; i++) {
+//         numbers[i] = Number(segments[i]); // convert each of the segments into a number
+//         if (isNaN(numbers[i])) return false; // if the result isn't a number something is wrong
+//     }
+
+//     // if there are too many days, too many months or any of the numbers are <= 0 something is wrong
+//     if (numbers[1] <= 0 || numbers[1] > 12 || numbers[0] <= 0 || numbers[0] > daysInMonths[numbers[1] - 1] || numbers[2] <= 0) return false;
+
+//     return true; // date is valid
+// }
+
+/* 
+Updated isValidDateString function:
+This function is a more robust implementation of the date validation logic, addressing several shortcomings of the original function:
+1. Leap Year Handling: It correctly checks for leap years, ensuring that February has 29 days when appropriate.
+2. Input Validation: It includes more comprehensive checks for empty, null, or malformed input. 
+3. Day Validation Logic: It properly handles the day validation by considering both the month length and leap years, rather than assuming a fixed number of days in February.
+4. Comprehensive: It is more comprehensive, handling edge cases better and accounting for leap years, making it a more reliable solution.
+*/
+
+export function isValidDateString(date) {
+    // Null/undefined/empty check
+    if (typeof date !== 'string' || !date.trim()) return false;
+
+    const segments = date.split("/"); // DD/MM/YYYY
+
+    if (segments.length !== 3) return false;
+
+    // Ensure strict format: DD/MM/YYYY
+    if (segments[0].length !== 2 || segments[1].length !== 2 || segments[2].length !== 4) return false;
+
+    const [dayStr, monthStr, yearStr] = segments;
+    const day = Number(dayStr);
+    const month = Number(monthStr);
+    const year = Number(yearStr);
+
+    if (
+        isNaN(day) || isNaN(month) || isNaN(year) ||
+        day <= 0 || month <= 0 || year <= 0 ||
+        month > 12
+    ) {
+        return false;
     }
 
-    // if there are too many days, too many months or any of the numbers are <= 0 something is wrong
-    if (numbers[1] <= 0 || numbers[1] > 12 || numbers[0] <= 0 || numbers[0] > daysInMonths[numbers[1] - 1] || numbers[2] <= 0) return false;
+    // Handle February and leap year logic
+    if (month === 2) {
+        const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        if (day > (isLeap ? 29 : 28)) return false;
+    } else {
+        const daysInMonths = [31, -1, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        if (day > daysInMonths[month - 1]) return false;
+    }
 
-    return true; // date is valid
+    return true;
 }
+
 
 /**
  * Generates a random flight ID based on the airline name provided.
