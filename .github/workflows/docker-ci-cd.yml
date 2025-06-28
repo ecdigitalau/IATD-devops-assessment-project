@@ -44,17 +44,17 @@ jobs:
     # Build and Push Test Image
     - name: Build Docker Image (Test Image)
       run: |
-        docker build -f Dockerfiles/test.Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/earnest-thomas-intro-to-devops-a2:test-latest .
+        docker build -f Dockerfiles/test.Dockerfile -t ecdigital/earnest-thomas-intro-to-devops-a2:test-latest .
 
     - name: Push Test Docker Image
       run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/earnest-thomas-intro-to-devops-a2:test-latest
+        docker push ecdigital/earnest-thomas-intro-to-devops-a2:test-latest
 
-    # Build and Push User-Facing Image
+    # Build and Push User-Facing Image (Renamed to user-latest)
     - name: Build Docker Image (User Image)
       run: |
-        docker build -f Dockerfiles/user.Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/earnest-thomas-intro-to-devops-a2:latest .
+        docker build -f Dockerfiles/user.Dockerfile -t ecdigital/earnest-thomas-intro-to-devops-a2:user-latest .
 
     - name: Push User Docker Image
       run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/earnest-thomas-intro-to-devops-a2:latest
+        docker push ecdigital/earnest-thomas-intro-to-devops-a2:user-latest
