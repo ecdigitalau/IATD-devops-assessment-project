@@ -12,7 +12,6 @@ RUN npm ci --omit=dev  # Only install production dependencies
 
 # Copy only production-relevant code
 COPY src ./src
-COPY public ./public
 # Add any additional folders you need (e.g., config, views, etc.)
 
 # Expose port (change if your app runs on a different one)
