@@ -6,7 +6,6 @@
 .vscode
 Dockerfiles
 node_modules
-tests
 *.log
 *.md
 *.env
