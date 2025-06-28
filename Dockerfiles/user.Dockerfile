@@ -7,12 +7,14 @@ WORKDIR /usr/src/app
 # Copy dependency files first (to leverage caching)
 COPY package*.json ./
 
-# Install system dependencies
-# Using apt-get to install Perl and util-linux for compatibility with some npm packages
-RUN apt-get update && apt-get install -y perl util-linux && rm -rf /var/lib/apt/lists/*
+# Install system dependencies (Alpine version)
+RUN apk add --no-cache perl util-linux
 
-# Install dependencies
-RUN npm ci --omit=dev  # Only install production dependencies
+# Copy package files
+COPY package*.json ./
+
+# Install production dependencies
+RUN npm ci --omit=dev
 
 # Copy only production-relevant code
 COPY src ./src
