@@ -48,6 +48,6 @@ The image is published to Docker Hub and can be pulled and run directly.
 Use the following command to run the application:
 
 ```bash
-docker run -it --rm ecdigital/earnest-thomas-intro-to-devops-a2:latest
+docker run -it --rm ecdigital/earnest-thomas-intro-to-devops-a2:user-latest
 ```
 
