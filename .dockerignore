@@ -7,7 +7,6 @@
 Dockerfiles
 node_modules
 *.log
-*.md
 *.env
 *.DS_Store
 npm-debug.log
