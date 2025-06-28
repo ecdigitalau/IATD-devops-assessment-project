@@ -22,7 +22,7 @@ Use this command to run the tests inside the container:
 
 ```bash
 docker run --rm ecdigital/earnest-thomas-intro-to-devops-a2:test-latest
-
+```
 
 ---
 
@@ -49,3 +49,5 @@ Use the following command to run the application:
 
 ```bash
 docker run -it --rm ecdigital/earnest-thomas-intro-to-devops-a2:latest
+```
+
